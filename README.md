@@ -3,6 +3,7 @@
 # Sales Data Analysis Documentation
 
 ## Step 1: Reading the Dataset
+I'm loading the sales dataset from a CSV file using the read.csv function. The dataset is stored in the variable df, and the View function allows us to inspect the initial structure of the data.
 
 ```R
 # Read the dataset
@@ -13,41 +14,62 @@ View(df)
 ```
 
 ## Step 2: Data Exploration and Cleaning
+Here, I'm checking the structure of the dataset using the ```str``` function to understand the data or the structure in the csv file.
+
 ```R
 # Checking the structure of the data
 #I'm checking the structure of the dataset and also trying to understand its composition.
 str(df)
-
+```
+I will then install and load the tidyverse package, which will help me in data manipulation and visualizations
+```R
 # Installing and loading the required packages now..
 install.packages("tidyverse")
 library(tidyverse)
+```
 
+Checking if there are any missing values in the dataset using the sapply function and then I'm using sum fucntion to check if there are any missing values in each column.
+```R
 # Checking for missing values
 missing_values <- sapply(df, is.na)
 sum(missing_values)
+```
 
+ Using ```trims``` function to delete the leading and trailing spaces in specific columns, to improve the data cleanliness and consistency in the dataframe.
+```R
 # Trimming leading or trailing spaces in columns
 df$Date <- trimws(df$Date)
 # Trim other columns similarly
 View(df)
+```
 
+Converting the Categorical variables into factors by using the ```factor``` function and then trying to make it easier for categorical data analysis.
+```R
 # Converting categorical variables to factors
 TrSpaceAfter$Country <- factor(TrSpaceAfter$Country)
-
+```
+Checking the structure of the data again..
+```R
 # Convert other columns similarly
 View(factorDf)
-
+```
+Date column is converted to a proper date type for accurate date-related operations
+```R
 # Converting Date column to Date type
 factorDf$Date <- as.Date(factorDf$Date, format = "%Y-%m-%d")
 str(factorDf)
-
+```
+Selected columns are converted to numeric format, I will be using these columns to do the statistical analysis.
+```R
 # Converting required columns to numeric format
 factorDf$Day <- as.numeric(factorDf$Day)
 # Convert other columns similarly
 str(factorDf)
 summary(factorDf)
 View(factorDf)
-
+```
+Trying yo split the 'Age_Group' column into 'Age_Range' and 'Age_Group,' so that I can provide more detailed information for age-related analysis.
+```R
 # Separating Age Group and Range into two different columns
 factorDf$Age_Range <- gsub(".*\\((.*)\\).*", "\\1", factorDf$Age_Group)
 factorDf$Age_Group <- gsub("\\(.*\\)", "", factorDf$Age_Group)
@@ -55,6 +77,7 @@ factorDf$Age_Range <- trimws(factorDf$Age_Range)
 View(factorDf)
 ```
 
+Verifying the dataset to check if there are any missing values after the data cleaning steps before working on creating the visualizations.
 ## Step 3: Data Visualization
 ```R
 # Data summary before analysis
