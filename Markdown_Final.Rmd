@@ -1,0 +1,301 @@
+---
+title: "BIS581 Final Project"
+author: "Sai Sudheer Dontha"
+date: "2023-12-12"
+output: pdf_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Read the dataset
+df <- read.csv("C:/Users/sudhi/OneDrive/Desktop/BIS581_FinalProject/Sales.csv", 
+               header=TRUE, stringsAsFactors=FALSE);
+head(df, n=12)
+
+```
+
+
+```{r}
+# Installing the required packages
+#install.packages("tidyverse")
+#library(tidyverse)
+```
+
+```{r}
+#Checking the structure of the data so that I can figure out the next steps.
+str(df)
+```
+
+```{r}
+#Date column is in character format
+#So, I'm converting Date to Date type
+#Do not execute below statements, as it turned Date rows to NA
+  #df$Date <- as.Date(df$Date, format="%m/%d/%Y")
+  #str(df)
+```
+
+```{r}
+#install.packages("lubridate")
+#library(lubridate)
+#
+## Checking if there are any missing values
+#missing_values <- sapply(df, is.na)
+#missing_values
+# Get the number of missing values in each column
+#sum(missing_values)
+```
+
+```{r}
+# Trim any leading or trailing spaces in the columns
+df$Date <- trimws(df$Date)
+df$Day	<- trimws(df$Day)
+df$Month	<- trimws(df$Month)
+df$Year	<- trimws(df$Year)
+df$Customer_Age	<- trimws(df$Customer_Age)
+df$Age_Group	<- trimws(df$Age_Group)
+df$Customer_Gender	<- trimws(df$Customer_Gender)
+df$Country	<- trimws(df$Country)
+df$State	<- trimws(df$State)
+df$Product_Category	<- trimws(df$Product_Category)
+df$Sub_Category	<- trimws(df$Sub_Category)
+df$Product	<- trimws(df$Product)
+df$Order_Quantity	<- trimws(df$Order_Quantity)
+df$Unit_Cost	<- trimws(df$Unit_Cost)
+df$Unit_Price	<- trimws(df$Unit_Price)
+df$Profit	<- trimws(df$Profit)
+df$Cost	<- trimws(df$Cost)
+df$Revenue <- trimws(df$Revenue)
+
+TrSpaceAfter <- df
+head(TrSpaceAfter, n=10)
+#View(TrSpaceAfter)
+```
+
+```{r}
+# Convert categorical variables to factors
+TrSpaceAfter$Country <- factor(TrSpaceAfter$Country)
+TrSpaceAfter$Year <- factor(TrSpaceAfter$Year)
+TrSpaceAfter$Customer_Age  <- factor(TrSpaceAfter$Customer_Age)
+TrSpaceAfter$Age_Group <- factor(TrSpaceAfter$Age_Group)
+TrSpaceAfter$Customer_Gender <- factor(TrSpaceAfter$Customer_Gender)
+#TrSpaceAfter$country <- factor(TrSpaceAfter$country)
+TrSpaceAfter$State <- factor(TrSpaceAfter$State)
+TrSpaceAfter$Sub_Category <- factor(TrSpaceAfter$Sub_Category)
+TrSpaceAfter$Product <- factor(TrSpaceAfter$Product)
+TrSpaceAfter$Unit_Cost <- factor(TrSpaceAfter$Unit_Cost)
+TrSpaceAfter$Unit_Price <- factor(TrSpaceAfter$Unit_Price)
+
+TrSpaceAfter$Month <- factor(TrSpaceAfter$Month)
+TrSpaceAfter$Product_Category <- factor(TrSpaceAfter$Product_Category)
+
+factorDf <- TrSpaceAfter
+#View(factorDf)
+head(factorDf, n=10)
+```
+
+```{r}
+factorDf$Date <- as.Date(factorDf$Date, format = "%Y-%m-%d")
+str(factorDf)
+```
+
+```{r}
+# Converting required columns into numeric format
+factorDf$Day <- as.numeric(factorDf$Day)
+
+factorDf$Customer_Age<- as.numeric(factorDf$Customer_Age)	
+factorDf$Order_Quantity<- as.numeric(factorDf$Order_Quantity)	
+factorDf$Unit_Cost<- as.numeric(factorDf$Unit_Cost)	
+factorDf$Unit_Price<- as.numeric(factorDf$Unit_Price)	
+factorDf$Profit<- as.numeric(factorDf$Profit)	
+factorDf$Cost<- as.numeric(factorDf$Cost)	
+factorDf$Revenue<- as.numeric(factorDf$Revenue)
+```
+
+```{r}
+# Check the structure of the Column dataType after conversion
+str(factorDf)
+summary(factorDf)
+```
+
+```{r}
+#Seperating Age Group and range into two different columns
+# Assuming your data frame is named 'df'
+factorDf$Age_Range <- gsub(".*\\((.*)\\).*", "\\1", factorDf$Age_Group)
+
+# Remove the content within brackets from 'Age_Group'
+factorDf$Age_Group <- gsub("\\(.*\\)", "", factorDf$Age_Group)
+
+# Remove leading and trailing whitespaces in 'Age_Range'
+factorDf$Age_Range <- trimws(factorDf$Age_Range)
+
+# Display the modified data frame
+head(factorDf, n=10)
+#View(factorDf)
+```
+
+```{r}
+# Checking if there are any missing values
+missing_valuesOfFactorDf <- sapply(factorDf, is.na)
+#missing_values
+# Get the number of missing values in each column
+sum(missing_valuesOfFactorDf)
+
+head(factorDf, n=10)
+#View(factorDf)
+```
+
+```{r}
+#Start my Visualization from here
+
+#Let's check summary so far.
+summary(factorDf)
+
+analysisDf <- factorDf
+#View(analysisDf)
+```
+
+```{r}
+#Plotting 
+
+
+library(ggplot2)
+#
+library(dplyr)
+#
+## Install and load the 'viridis' package
+#install.packages("viridis")
+#library(viridis)
+
+# Viz 1, creating a Bar plot for Product Category
+ggplot(analysisDf, aes(x = Product_Category, fill = Age_Group)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Product Category Distribution by Age Group",
+       x = "Product Category",
+       y = "Count") +
+  scale_fill_manual(values = c("pink", "beige", "brown", "chocolate", "orange")) +  # Specify your own colors
+  theme_minimal()
+
+age_range_colors <- c("<25" = "#FF5F1F", "25-34" = "#FFBF00", "35-64" = "#E3735E", "64+" = "#FA5F55")
+
+```
+
+
+```{r}
+# Viz 2, creating a Scatter plot to show difference between Order Quantity vs. Profit
+ggplot(analysisDf, aes(x = Order_Quantity, y = Profit, color = Age_Range)) +
+  geom_point() +
+  labs(title = "Scatter Plot of Order Quantity vs. Profit",
+       x = "Order Quantity",
+       y = "Profit") +
+  scale_color_manual(values = age_range_colors) +
+  facet_wrap(~Age_Range, scales = "free")
+
+my_colors <- c("#880808", "#AA4A44", "#E97451", "#F88379", "#E0115F")
+
+```
+
+
+```{r}
+# Viz 3, Creating a pie chart for Age Group distribution with count labels
+ggplot(analysisDf, aes(x = "", fill = Age_Group)) +
+  geom_bar(width = 1, color = "white") +
+  geom_text(stat = "count", aes(label = stat(count)), position = position_stack(vjust = 0.5), color = "black", size = 4) +
+  scale_fill_manual(values = my_colors) +
+  coord_polar("y") +
+  labs(title = "Pie Chart of Age Group Distribution with Counts") +
+  theme_minimal()
+```
+
+
+```{r}
+# Viz 4, Faceted bar plot for Country Distribution
+ggplot(analysisDf, aes(x = Age_Group, fill = Age_Group)) +
+  geom_bar() +
+  facet_wrap(~ Country, scales = "free") +
+  labs(title = "Country Distribution by Age Group",
+       x = "Age Group",
+       y = "Count") +
+  theme_minimal()
+```
+
+```{r}
+#Viz 5, creating a graph for Average Profit by Age Group
+ggplot(df, aes(x = Age_Group, y = Profit, fill = Age_Group)) +
+  geom_bar(stat = "summary", fun = "mean") +
+  scale_fill_manual(values = c("#0818A8", "#191970", "#5F9EA0", "#6495ED")) +
+  labs(title = "Average Profit by Age Group",
+       x = "Age Group",
+       y = "Average Profit")
+
+#View(analysisDf)
+```
+
+
+```{r}
+newAnalysisDf <- analysisDf
+```
+
+
+```{r}
+#Analysis
+
+# Descriptive statistics
+
+
+# Check the lengths of vectors
+length(analysisDf$Unit_Price)
+length(analysisDf$Gender)
+
+
+# Descriptive statistics
+#summary(analysisDf)
+
+# Check for missing values
+sum(is.na(analysisDf$Order_Quantity))
+sum(is.na(analysisDf$Unit_Price))
+sum(is.na(analysisDf$Revenue))
+sum(is.na(analysisDf$Age_Group))
+sum(is.na(analysisDf$Gender))
+sum(is.na(analysisDf$Country))
+```
+
+
+```{r}
+
+# Descriptive statistics
+# Using tapply here to know the sum of order quantity
+tapply(analysisDf$Order_Quantity, analysisDf$Age_Group, sum, na.rm = TRUE)
+
+#Countries Revenue sum
+tapply(analysisDf$Revenue, analysisDf$Country, sum, na.rm = TRUE)
+
+# Visualize the statistics 
+#ggplot(analysisDf, aes(x = Age_Group, y = Order_Quantity)) + 
+#  geom_bar(stat = "summary", fun = "sum", fill = "skyblue") +
+#  labs(title = "Purchase Quantity by Age Group")
+
+#ggplot(analysisDf, aes(x = Country, y = Revenue)) + 
+#  geom_bar(stat = "summary", fun = "sum", fill = "orange") +
+#  labs(title = "Total Revenue by Country")
+
+```
+
+```{r}
+# Linear regression
+lm_model <- lm(Revenue ~ Customer_Age + Unit_Price + Order_Quantity, data = analysisDf)
+summary(lm_model)
+```
+
+
+```{r}
+# Chi Square analysis to test the relation between Age_Range and Customer_Gender
+chisq.test(table(analysisDf$Age_Range, analysisDf$Customer_Gender))
+
+# Correlation matrix
+cor(analysisDf[, c("Order_Quantity", "Unit_Price", "Profit", "Customer_Age")])
+
+```
