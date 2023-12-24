@@ -167,3 +167,6 @@ tapply(analysisDf$Revenue, analysisDf$Country, sum, na.rm = TRUE)
 lm_model <- lm(Revenue ~ Customer_Age + Unit_Price + Order_Quantity, data = analysisDf)
 summary(lm_model)
 ```
+
+#### Shiny App
+Will be adding this soon!
