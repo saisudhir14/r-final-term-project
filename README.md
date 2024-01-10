@@ -168,5 +168,5 @@ lm_model <- lm(Revenue ~ Customer_Age + Unit_Price + Order_Quantity, data = anal
 summary(lm_model)
 ```
 
-#### Shiny App
-Will be adding this soon!
+#### Shiny App 
+
