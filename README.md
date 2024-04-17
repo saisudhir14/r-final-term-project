@@ -169,4 +169,12 @@ summary(lm_model)
 ```
 
 #### Shiny App 
+I know this can be improved! This is my first attempt working on shiny.. View the complete shiny app code [here!](https://github.com/saisudhir14/r-final-term-project/blob/main/r-shiny-app.R)
+![image](https://github.com/saisudhir14/r-final-term-project/assets/55187887/a1f1e495-e68a-45d4-9774-339d4616903b)
+Browse and upload the `sales.csv` file <br>
+When the upload is complete. click on `Load Data` Button ![image](https://github.com/saisudhir14/r-final-term-project/assets/55187887/0b652f8d-95da-44e2-b6e3-ca1e0cf82014)<br>
+![image](https://github.com/saisudhir14/r-final-term-project/assets/55187887/8e9ca84e-e0ab-42f4-988e-f958fa6d4380)<br>
+Click on each button to view the visualization ![image](https://github.com/saisudhir14/r-final-term-project/assets/55187887/e1924fc7-c3c6-442e-bc8a-764732410224)<br>
+![image](https://github.com/saisudhir14/r-final-term-project/assets/55187887/1fa3036f-c2ce-4f5d-b611-2d51a1866cad)<br>
+![image](https://github.com/saisudhir14/r-final-term-project/assets/55187887/ad9b8446-9d35-409d-badb-19a37ebbe6ab) <br>
 
